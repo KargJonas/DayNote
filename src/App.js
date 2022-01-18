@@ -18,10 +18,37 @@ export default class App extends Component {
     this.state = {
       entries: [new Entry(), new Entry(), new Entry()]
     };
+
+    this.textareaReferences = [];
   }
 
-  handleKeyUp(event, index) {
-    
+  handleKeyDown(event, index) {
+    const { key } = event;
+
+    // Return as quickly as possible to reduce load while typing
+    if (key !== "ArrowUp" && key !== "ArrowDown") return;
+    const current = this.textareaReferences[index];
+    const currentLineCount = current.value.split("\n").length;
+    const cursorLine = current.value.substr(0, current.selectionStart).split("\n").length;
+
+    if (key === "ArrowDown") {
+      if (cursorLine !== currentLineCount) return;
+      if (index === 0) return;
+      const next = this.textareaReferences[index - 1];
+      next.focus();
+      next.setSelectionRange(0, 0); // !! Does not select for some reason
+      event.preventDefault();
+    }
+
+    if (key === "ArrowUp") {
+      if (cursorLine !== 1) return;
+      if (index === this.state.entries.length - 1) return;
+      const next = this.textareaReferences[index + 1];
+      next.focus();
+      next.setSelectionRange(next.value.length, next.value.length);
+      event.preventDefault();
+
+    }
   }
 
   getEntries() {
@@ -39,8 +66,8 @@ export default class App extends Component {
             className="text-box"
             spellCheck="false"
             defaultValue={text}
-            onKeyUp={(event) => this.handleKeyUp(event, i)}
-            // ref={(tag) => (this.textarea = tag)}
+            onKeyDown={(event) => this.handleKeyDown(event, i)}
+            ref={(tag) => (this.textareaReferences[i] = tag)}
           />
           <div className="separator" />
         </li>
@@ -51,13 +78,13 @@ export default class App extends Component {
   }
 
   render() {
-    const entries = this.getEntries();
+    const entryElements = this.getEntries();
 
     return (
       <div className="App">
         <img id="dark-mode-indicator" src={sun} />
         <div id="main">
-          {entries}
+          {entryElements}
         </div>
       </div>
     );
