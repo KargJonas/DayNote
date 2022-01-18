@@ -82,6 +82,8 @@ export default class App extends Component {
 
     return (
       <div className="App">
+        <div id="header-cover" />
+        <h1 id="header">DayNote</h1>
         <img id="dark-mode-indicator" src={sun} />
         <div id="main">
           {entryElements}
