@@ -1,8 +1,9 @@
 .App {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: max-content;
+  min-height: 100vh;
 
-  padding-top: 20px;
+  // padding-top: 20px;
   padding-left: 90px;
   box-sizing: border-box;
 
@@ -10,39 +11,62 @@
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
     box-sizing: border-box;
     width: 100%;
-    height: 100%;
-    padding: 20px 0 0 40px;
-    border-left: 3px solid #e9ecef;
+    // height: 100%;
+    padding: 80px 0 0 40px;
+    // border-left: 3px solid #e9ecef;
+    border-left: 3px solid #e0fbfc;
     background-color: #212529;
 
     li {
       list-style: none;
+      // margin-bottom: 12px;
+    }
+
+    .separator {
+      position: relative;
+      width: 13px;
+      border-top: 2px solid #e0fbfc;
+      left: -40px;
+      // top: -40px;
     }
 
     .date-tag {
+      position: relative;
       color: #e0fbfc;
       font-size: 13px;
-      // background-color: #495057;
       width: max-content;
       padding: 3px 5px;
       border-radius: 3px;
-      position: absolute;
-      left: 8px;
+      // left: -30px;
+      left: -125px;
+      top: 19px;
+
+      // margin-top: 3px;
     }
 
-    textarea {
+    .text-box {
       font-size: 21px;
       background-color: transparent;
       border: none;
       color: #e0fbfc;
       width: 100%;
-      height: 100%;
+      height: max-content;
       padding: 0;
       resize: none;
       box-shadow: none;
       -webkit-box-shadow: none;
       -moz-box-shadow: none;
       outline: none;
+      margin-bottom: 10px;
     }
+  }
+
+  #dark-mode-indicator {
+    width: 23px;
+    height: 23px;
+    position: absolute;
+    top: 25px;
+    right: 30px;
+    filter: invert(1);
   }
 }

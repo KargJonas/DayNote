@@ -6,6 +6,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  // background-color: #ADB5BD; // bright
   background-color: #212529; // dark
+}
+
+html {
+  // filter: invert(1);
 }
