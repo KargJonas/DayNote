@@ -1,5 +1,7 @@
 import { Component } from 'react';
 import dayjs from 'dayjs';
+import classNames from 'classnames';
+
 import TextareaAutosize from 'react-textarea-autosize';
 import './App.scss';
 
@@ -16,6 +18,7 @@ export default class App extends Component {
   constructor() {
     super();
     this.state = {
+      lightMode: false,
       entries: [new Entry(), new Entry(), new Entry()]
     };
 
@@ -77,14 +80,19 @@ export default class App extends Component {
     return elements;
   }
 
+  toggleLightMode() {
+    this.setState({ lightMode: !this.state.lightMode });
+  }
+
   render() {
     const entryElements = this.getEntries();
+    const classes = classNames('App', { 'light-mode': this.state.lightMode });
 
     return (
-      <div className="App">
+      <div className={classes}>
         <div id="header-cover" />
         <h1 id="header">DayNote</h1>
-        <img id="dark-mode-indicator" src={sun} />
+        <img id="dark-mode-indicator" src={sun} onClick={this.toggleLightMode.bind(this)} />
         <div id="main">
           {entryElements}
         </div>
