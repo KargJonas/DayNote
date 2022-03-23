@@ -2,13 +2,18 @@ import { Component } from 'react';
 
 import './Terminal.scss';
 import magnifyingGlass from '../assets/magnifying-glass.svg';
+import classNames from 'classnames';
 
 export default class Terminal extends Component {
   constructor() {
     super();
 
+    this.state = {
+      highlightedOption: 0
+    };
+
     this.inputRef = undefined;
-    this.keyEvent = this.focus.bind(this);
+    this.keyEvent = this.keyPressed.bind(this);
   }
 
   componentDidMount() {
@@ -19,13 +24,37 @@ export default class Terminal extends Component {
     window.removeEventListener('keydown', this.keyEvent);
   }
 
-  focus() {
+  keyPressed({ key }) {
     this.inputRef.focus();
+    const max = this.props.options.length;
+
+    switch (key) {
+      case 'ArrowUp':
+        this.setState({highlightedOption: Math.abs(((this.state.highlightedOption - 1) % max))});
+        break;
+
+      case 'ArrowDown':
+        this.setState({highlightedOption: (this.state.highlightedOption + 1) % max});
+        break;
+
+      case 'Enter':
+        this.props.options[this.state.highlightedOption][1]();
+        this.props.close();
+        break;
+    }
   }
 
   getOptions() {
     return this.props.options.map(([name, callback], index) => {
-      return <div key={index} className='option' onClick={callback}>{name}</div>
+      const classes = classNames('option',
+        { highlighted: index === this.state.highlightedOption });
+
+      return <div
+        key={index}
+        className={classes}
+        onClick={callback}>
+        {name}
+      </div>
     });
   }
 
