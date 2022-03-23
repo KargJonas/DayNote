@@ -61,7 +61,13 @@
         padding: 10px 20px;
         box-sizing: border-box;
         margin-left: -1px;
-        width: calc(100% + 2px)
+        width: calc(100% + 2px);
+        // font-weight: bold;
+        cursor: default;
+        -webkit-user-select: none;  
+        -moz-user-select: none;    
+        -ms-user-select: none;      
+        user-select: none;
       }
 
       .highlighted {

@@ -30,29 +30,35 @@ export default class Terminal extends Component {
 
     switch (key) {
       case 'ArrowUp':
-        this.setState({highlightedOption: Math.abs(((this.state.highlightedOption - 1) % max))});
+        this.setState({ highlightedOption: Math.abs(((this.state.highlightedOption - 1) % max)) });
         break;
 
       case 'ArrowDown':
-        this.setState({highlightedOption: (this.state.highlightedOption + 1) % max});
+        this.setState({ highlightedOption: (this.state.highlightedOption + 1) % max });
         break;
 
       case 'Enter':
-        this.props.options[this.state.highlightedOption][1]();
-        this.props.close();
+        this.optionSelected();
         break;
     }
   }
 
+  optionSelected() {
+    this.props.options[this.state.highlightedOption][1]();
+    this.props.close();
+  }
+
   getOptions() {
-    return this.props.options.map(([name, callback], index) => {
+    return this.props.options.map(([name], index) => {
       const classes = classNames('option',
         { highlighted: index === this.state.highlightedOption });
 
       return <div
         key={index}
         className={classes}
-        onClick={callback}>
+        onClick={this.optionSelected.bind(this)}
+        onMouseEnter={() => { this.setState({ highlightedOption: index }) }}
+      >
         {name}
       </div>
     });
